@@ -2,23 +2,24 @@ using System.Collections.Generic;
 using JiraExport.Client;
 using JiraExport.Extensions;
 using JiraExport.Interfaces;
+using RestSharp;
 
 namespace JiraExport.Endpoints {
-    public class Organization : JiraRequest, IGetRequest, IPostRequest, IDeleteRequest
+    public class Organization : RequestBase, IGetRequest, IPostRequest, IDeleteRequest
     {
-        protected override string Endpoint {get;} = "servicedesk/{serviceDeskId}/organization";
+        protected override string Resource {get;} = "servicedesk/{serviceDeskId}/organization";
 
-        public string Get(object parameters = null)
+        public IRestResponse Get(object parameters = null)
         {
-            return GetBase(parameters).Content;
+            return GetBase(parameters);
         }
 
-        public string Post(string body = null, object parameters = null)
+        public IRestResponse Post(string body = null, object parameters = null)
         {
             return PostBase(body, parameters);
         }
 
-        public string Delete(string body = null, object parameters = null)
+        public IRestResponse Delete(string body = null, object parameters = null)
         {
             return DeleteBase(body, parameters);
         }

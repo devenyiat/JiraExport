@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using RestSharp;
 
 namespace JiraExport.Interfaces {
     public interface IPutRequest {
-        string Put(string body, object parameters = null);
+        IRestResponse Put(string body, object parameters = null);
     }
 }

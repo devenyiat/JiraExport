@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using RestSharp;
 
 namespace JiraExport.Interfaces {
     public interface IGetRequest {
-        string Get(object parameters = null);
+        IRestResponse Get(object parameters = null);
     }
 }

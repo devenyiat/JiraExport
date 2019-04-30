@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using RestSharp;
 
 namespace JiraExport.Interfaces {
     public interface IDeleteRequest {
-        string Delete(string body, object parameters = null);
+        IRestResponse Delete(string body, object parameters = null);
     }
 }
