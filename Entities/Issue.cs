@@ -9,19 +9,28 @@ namespace JiraExport.Entities {
         public DateTime Created {get;}
         public List<Change> Changelog {get;}
 
+        public Issue(string id, string status, DateTime created, List<Change> changelog) {
+            Id = id;
+            Status = status;
+            Created = created;
+            Changelog = changelog;
+        }
+
         public List<string> ToCsvLines() {
             var lines = new List<string>();
-            if (!Changelog.Any()) {
-                lines.Add($"{Id},{Status},,{DateTime.Now.Subtract(Created)}");
-            }
-            else {
-                for (int i = 0; i < Changelog.Count; i++) {
+            var changeCount = Changelog.Count;
+            DateTime refDate;
+
+            if (changeCount != 0) {
+                for (int i = 0; i < changeCount; i++) {
                     var change = Changelog[i];
-                    var prevDate = i == 0 ? Created : Changelog[i-1].Date;
-                    //var nextDate = 
-                    lines.Add($"{Id},{change.StatusFrom},{change.StatusTo},");
+                    refDate = i == 0 ? Created : Changelog[i-1].Date;
+                    lines.Add($"{Id},{change.StatusFrom},{change.StatusTo},{change.Date.Subtract(refDate)}");
                 }
             }
+            
+            refDate = changeCount == 0 ? Created : Changelog.Last().Date;
+            lines.Add($"{Id},{Status},,{DateTime.Now.Subtract(refDate)}");
             return lines;
         }
     }

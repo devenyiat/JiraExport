@@ -14,8 +14,8 @@ namespace JiraExport.Client {
 
         private static RestClient _client;
 
-        public RequestBase() {
-            Initialize();
+        public RequestBase(RestClient client) {
+            _client = client;
         }
 
         protected IRestResponse PutBase(string body, Dictionary<string, string> parameters) {
@@ -53,6 +53,9 @@ namespace JiraExport.Client {
                 else {
                     request.AddQueryParameter(key, parameters[key]);
                 }
+            }
+            if (body != null) {
+                request.AddJsonBody(body);
             }
             return request;
         }
