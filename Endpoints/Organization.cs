@@ -5,7 +5,7 @@ using JiraExport.Interfaces;
 using RestSharp;
 
 namespace JiraExport.Endpoints {
-    public class Organization : RequestBase, IGetRequest, IPostRequest, IDeleteRequest
+    public class Organization : ServiceBase, IGetRequest, IPostRequest, IDeleteRequest
     {
         protected override string Resource {get;} = "servicedesk/{serviceDeskId}/organization";
 

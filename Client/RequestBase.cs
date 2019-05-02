@@ -6,7 +6,7 @@ using JiraExport.Extensions;
 using RestSharp;
 
 namespace JiraExport.Client {
-    public abstract class RequestBase {
+    public abstract class ServiceBase {
 
         protected abstract string Resource {get;}
         protected IEnumerable<string> UrlSegments {get;} = Enumerable.Empty<string>();
@@ -14,7 +14,7 @@ namespace JiraExport.Client {
 
         private static RestClient _client;
 
-        public RequestBase(RestClient client) {
+        public ServiceBase(RestClient client) {
             _client = client;
         }
 
