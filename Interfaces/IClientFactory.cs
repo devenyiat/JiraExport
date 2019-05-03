@@ -2,6 +2,6 @@ using RestSharp;
 
 namespace JiraExport.Interfaces {
     public interface IClientFactory {
-        IRestClient Create();
+        IRestClient Create(string baseUrl);
     }
 }
