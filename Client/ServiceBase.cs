@@ -10,8 +10,7 @@ namespace JiraExport.Client {
     public abstract class ServiceBase {
 
         protected abstract string Resource {get;}
-        protected IEnumerable<string> UrlSegments {get;} = Enumerable.Empty<string>();
-        protected string BaseUrl;
+        protected abstract IEnumerable<string> UrlSegments {get;}
 
         private IClientFactory _clientFactory;
         private IRequestFactory _requestFactory;
@@ -21,29 +20,29 @@ namespace JiraExport.Client {
             _requestFactory = requestFactory;
         }
 
-        public ServiceBase(){
-            _clientFactory = new DefaultClientFactory();
+        public ServiceBase(string baseUrl){
+            _clientFactory = new DefaultClientFactory(baseUrl);
             _requestFactory = new DefaultRequestFactory(Resource, UrlSegments);
         }
 
-        protected IRestResponse PutBase(string body, Dictionary<string, string> parameters) {
+        protected IRestResponse PutBase(string body, object parameters) {
             var request = _requestFactory.Create(parameters, body);
-            return _clientFactory.Create(BaseUrl).Execute(request, Method.PUT);
+            return _clientFactory.Create().Execute(request, Method.PUT);
         }
 
         protected IRestResponse GetBase(object parameters) {
             var request = _requestFactory.Create(parameters, null);
-            return _clientFactory.Create(BaseUrl).Execute(request, Method.GET);
+            return _clientFactory.Create().Execute(request, Method.GET);
         }
 
         protected IRestResponse DeleteBase(string body, object parameters) {
             var request = _requestFactory.Create(parameters, body);
-            return _clientFactory.Create(BaseUrl).Execute(request, Method.DELETE);
+            return _clientFactory.Create().Execute(request, Method.DELETE);
         }
 
         protected IRestResponse PostBase(string body, object parameters) {
             var request = _requestFactory.Create(parameters, body);
-            return _clientFactory.Create(BaseUrl).Execute(request, Method.POST);
+            return _clientFactory.Create().Execute(request, Method.POST);
         }
     }
 }

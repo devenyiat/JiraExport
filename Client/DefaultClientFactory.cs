@@ -6,18 +6,23 @@ namespace JiraExport.Client {
     public class DefaultClientFactory : IClientFactory
     {
 
-        private static Dictionary<string, IRestClient> _client;
+        private string _baseUrl;
+        private static Dictionary<string, IRestClient> _clients;
 
         static DefaultClientFactory() {
-            _client = new Dictionary<string, IRestClient>();
+            _clients = new Dictionary<string, IRestClient>();
         }
 
-        public IRestClient Create(string baseUrl)
+        public DefaultClientFactory(string baseUrl) {
+            _baseUrl = baseUrl;
+        }
+
+        public IRestClient Create()
         {
-            if (!_client.ContainsKey(baseUrl)) {
-                _client.Add(baseUrl, new RestClient(baseUrl));
+            if (_clients.ContainsKey(_baseUrl)) {
+                _clients.Add(_baseUrl, new RestClient(_baseUrl));
             }
-            return _client[baseUrl];
+            return _clients[_baseUrl];
         }
     }
 }
